@@ -6,9 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.trabajogrupal.vibe_movile.databinding.ActivityVideosBinding
 
 class VideosActivity : AppCompatActivity() {
+
+
 
     lateinit var binding: ActivityVideosBinding
 
@@ -17,6 +22,9 @@ class VideosActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityVideosBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
 
         binding.btn1.setOnClickListener {
             val url =
@@ -45,10 +53,10 @@ class VideosActivity : AppCompatActivity() {
         intent.putExtra("url", url)
         startActivity(intent)
         finish()
-    }
 
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.despleg_menu, menu)
+        menuInflater.inflate(R.menu.despleg_menu,menu)
         return true
     }
 
@@ -75,12 +83,12 @@ class VideosActivity : AppCompatActivity() {
 
                 true
             }
-
-            R.id.img -> {
+            R.id.img-> {
                 val intent = Intent(this, imagenActivity::class.java)
                 startActivity(intent)
 
                 true
+
             }
 
             R.id.mp3 -> {
@@ -89,15 +97,14 @@ class VideosActivity : AppCompatActivity() {
 
                 true
             }
-
             R.id.rep -> {
                 val intent = Intent(this, ReproductorActivity::class.java)
                 startActivity(intent)
 
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
-    }
+}
+
 }

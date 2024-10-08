@@ -4,6 +4,7 @@ package com.trabajogrupal.vibe_movile
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Button
 import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
@@ -38,4 +39,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(i)
 
     }
+
+
 }

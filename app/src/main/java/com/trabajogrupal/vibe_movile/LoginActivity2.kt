@@ -24,25 +24,25 @@ class LoginActivity2 : AppCompatActivity() {
         binding.Login.setOnClickListener {
             val loginUsername = binding.editTextUsuarioL.text.toString()
             val logingEmail = binding.emaill.text.toString()
-            val loginPasswor= binding.editTextTextPassword2.text.toString()
-            logingDatabase(loginUsername,logingEmail,loginPasswor)
+            val loginPasswor = binding.editTextTextPassword2.text.toString()
+            logingDatabase(loginUsername, logingEmail, loginPasswor)
         }
 
-        binding.register.setOnClickListener{
+        binding.register.setOnClickListener {
             val intent = Intent(this, RegisterActivity2::class.java)
             startActivity(intent)
             finish()
         }
     }
 
-    private fun logingDatabase(username: String,email: String, password: String){
-        val userExists = databaseHelper.readUser(username,email,password)
-        if (userExists){
+    private fun logingDatabase(username: String, email: String, password: String) {
+        val userExists = databaseHelper.readUser(username, email, password)
+        if (userExists) {
 
             val sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-            with(sharedPref.edit()){
+            with(sharedPref.edit()) {
                 putString("username", username)
-                putString("email",email)
+                putString("email", email)
                 apply()
             }
             Toast.makeText(this, "Ingreso exitoso", Toast.LENGTH_SHORT).show()
@@ -50,9 +50,10 @@ class LoginActivity2 : AppCompatActivity() {
             startActivity(intent)
             finish()
 
-        }else{
+        } else {
             Toast.makeText(this, "El Ingreso Falló ", Toast.LENGTH_SHORT).show()
 
-         }
         }
+    }
+
 }

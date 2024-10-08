@@ -10,8 +10,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.widget.Toolbar
+import com.google.android.material.navigation.NavigationView
 
 class imagenActivity : AppCompatActivity() {
+
 
     private val imagenesMusicales = arrayOf(
         R.drawable.rock_genre,
@@ -106,6 +110,7 @@ class imagenActivity : AppCompatActivity() {
             "La Vida Es Un Carnaval - Celia Cruz"
         )
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -214,14 +219,15 @@ class imagenActivity : AppCompatActivity() {
         val canciones = cancionesPorGenero[genero] ?: emptyList()
 
         // Creamos un adaptador para las canciones con color blanco en el texto
-        val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, canciones) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent)
-                val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.setTextColor(getColor(R.color.white))  // Color blanco para las canciones
-                return view
+        val adapter =
+            object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, canciones) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent)
+                    val textView = view.findViewById<TextView>(android.R.id.text1)
+                    textView.setTextColor(getColor(R.color.white))  // Color blanco para las canciones
+                    return view
+                }
             }
-        }
 
         listView.adapter = adapter
 
@@ -248,37 +254,50 @@ class imagenActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.Perf -> {
+
                 val intent = Intent(this, PerfilActivity::class.java)
                 startActivity(intent)
+
                 true
             }
+
             R.id.vid -> {
                 val intent = Intent(this, VideosActivity::class.java)
                 startActivity(intent)
+
                 true
             }
+
             R.id.web -> {
                 val intent = Intent(this, WebActivity::class.java)
                 startActivity(intent)
+
                 true
             }
+
             R.id.img -> {
                 val intent = Intent(this, imagenActivity::class.java)
                 startActivity(intent)
+
                 true
+
             }
+
             R.id.mp3 -> {
                 val intent = Intent(this, Mp3Activity::class.java)
                 startActivity(intent)
+
                 true
             }
+
             R.id.rep -> {
                 val intent = Intent(this, ReproductorActivity::class.java)
                 startActivity(intent)
+
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

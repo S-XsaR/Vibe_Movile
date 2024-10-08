@@ -14,10 +14,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Handler
 import android.widget.SeekBar
 
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+
 
 class ReproductorActivity : AppCompatActivity() {
 
-    private lateinit var  elapsedTimeTextView: TextView
+
+    private lateinit var elapsedTimeTextView: TextView
     private lateinit var totalTimeTextView: TextView
     private lateinit var mediaPlayer: MediaPlayer
     private var currentSongIndex = 0
@@ -27,8 +32,26 @@ class ReproductorActivity : AppCompatActivity() {
     private val handler = Handler()
 
     // Agregamos el nombre de la cancion
-    private val songNames = arrayOf("OHNANA - Kapo","Sabrina Carpenter - Taste ","LISA - NEW WOMAN feat. Rosalía ","Myke Towers & Peso Pluma - SE TE NOTA ","Ana Mena, Emilia - CARITA TRISTE ","The Weeknd - Dancing In The Flames","Dani Fernández - Dile a los demás","KAROL G - Si Antes Te Hubiera Conocido")
-    private val songs = arrayOf(R.raw.ohnana, R.raw.taste, R.raw.newwoman, R.raw.setenota, R.raw.caritatriste, R.raw.dancingintheflames, R.raw.dilealosdemas, R.raw.siantestehubieraconocido)
+    private val songNames = arrayOf(
+        "OHNANA - Kapo",
+        "Sabrina Carpenter - Taste ",
+        "LISA - NEW WOMAN feat. Rosalía ",
+        "Myke Towers & Peso Pluma - SE TE NOTA ",
+        "Ana Mena, Emilia - CARITA TRISTE ",
+        "The Weeknd - Dancing In The Flames",
+        "Dani Fernández - Dile a los demás",
+        "KAROL G - Si Antes Te Hubiera Conocido"
+    )
+    private val songs = arrayOf(
+        R.raw.ohnana,
+        R.raw.taste,
+        R.raw.newwoman,
+        R.raw.setenota,
+        R.raw.caritatriste,
+        R.raw.dancingintheflames,
+        R.raw.dilealosdemas,
+        R.raw.siantestehubieraconocido
+    )
 
     private val songImages = arrayOf(
         R.drawable.ohnana,
@@ -91,9 +114,9 @@ class ReproductorActivity : AppCompatActivity() {
             playPreviousSong()
         }
         // configuramos el SeekBar
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if(fromUser && mediaPlayer.isPlaying){
+                if (fromUser && mediaPlayer.isPlaying) {
                     mediaPlayer.seekTo(progress * mediaPlayer.duration / 100)
                 }
             }
@@ -103,17 +126,18 @@ class ReproductorActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
     }
-    private fun startUpdatingSeekBar(){
-        handler.postDelayed(object  : Runnable {
-            override fun run(){
-                if(::mediaPlayer.isInitialized && mediaPlayer.isPlaying){
+
+    private fun startUpdatingSeekBar() {
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
                     val currentPosition = mediaPlayer.currentPosition
                     val progress = currentPosition * 100 / mediaPlayer.duration
                     val duration = mediaPlayer.duration
                     seekBar.progress = progress
 
                     //Actualizar TextView
-                    elapsedTimeTextView.text=formatTime(currentPosition)
+                    elapsedTimeTextView.text = formatTime(currentPosition)
                     totalTimeTextView.text = formatTime(duration)
 
                     handler.postDelayed(this, 1000)
@@ -121,47 +145,54 @@ class ReproductorActivity : AppCompatActivity() {
             }
         }, 0)
     }
-    private fun formatTime(millis: Int): String{
-        val minutes =millis / 1000 / 60
+
+    private fun formatTime(millis: Int): String {
+        val minutes = millis / 1000 / 60
         val seconds = millis / 1000 % 60
         return String.format("%02d:%02d", minutes, seconds)
     }
-    private fun updateTotalTime(){
+
+    private fun updateTotalTime() {
         totalTimeTextView.text = formatTime(mediaPlayer.duration)
     }
-    private fun stopUpdatingSeekBar(){
+
+    private fun stopUpdatingSeekBar() {
         handler.removeCallbacksAndMessages(null)
     }
-    private fun updateSongTitle(){
+
+    private fun updateSongTitle() {
         songTitleTextView.text = songNames[currentSongIndex]
     }
-    private fun playNextSong(){
+
+    private fun playNextSong() {
         if (mediaPlayer.isPlaying) {
             mediaPlayer.stop()
         }
-        currentSongIndex =(currentSongIndex + 1) % songs.size
+        currentSongIndex = (currentSongIndex + 1) % songs.size
         mediaPlayer.reset()
-        mediaPlayer =MediaPlayer.create(this,songs[currentSongIndex])
+        mediaPlayer = MediaPlayer.create(this, songs[currentSongIndex])
         updateSongTitle()
         updateSongImage()
         updateTotalTime()
         mediaPlayer.start()
         startUpdatingSeekBar()
     }
-    private fun playPreviousSong(){
+
+    private fun playPreviousSong() {
         if (mediaPlayer.isPlaying) {
             mediaPlayer.stop()
         }
-        currentSongIndex = if(currentSongIndex > 0)currentSongIndex - 1 else songs.size - 1
+        currentSongIndex = if (currentSongIndex > 0) currentSongIndex - 1 else songs.size - 1
         mediaPlayer.reset()
-        mediaPlayer = MediaPlayer.create(this,songs[currentSongIndex])
+        mediaPlayer = MediaPlayer.create(this, songs[currentSongIndex])
         updateSongTitle()
         updateSongImage()
         updateTotalTime()
         mediaPlayer.start()
         startUpdatingSeekBar()
     }
-    private fun updateSongImage(){
+
+    private fun updateSongImage() {
         songImageView.setImageResource(songImages[currentSongIndex])
     }
 
@@ -170,11 +201,15 @@ class ReproductorActivity : AppCompatActivity() {
         mediaPlayer.stop()
         mediaPlayer.release()
         stopUpdatingSeekBar()
+
+
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.despleg_menu, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.Perf -> {
@@ -204,6 +239,7 @@ class ReproductorActivity : AppCompatActivity() {
                 startActivity(intent)
 
                 true
+
             }
 
             R.id.mp3 -> {
@@ -212,6 +248,7 @@ class ReproductorActivity : AppCompatActivity() {
 
                 true
             }
+
             R.id.rep -> {
                 val intent = Intent(this, ReproductorActivity::class.java)
                 startActivity(intent)

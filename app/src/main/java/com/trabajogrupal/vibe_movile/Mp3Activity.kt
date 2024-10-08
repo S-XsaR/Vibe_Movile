@@ -1,7 +1,6 @@
 package com.trabajogrupal.vibe_movile
 
-
-
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -14,25 +13,35 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+
+class Mp3Activity : AppCompatActivity () {
 
 
-class Mp3Activity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_mp3)
 
+
+
         val songListLayout = findViewById<LinearLayout>(R.id.songList)
 
-        val songData= listOf(
-            Pair("OHNANA - Kapo",R.drawable.ohnana),
-            Pair("Sabrina Carpenter - Taste ",R.drawable.taste),
-            Pair("LISA - NEW WOMAN feat. Rosalía ",R.drawable.woman),
+        val songData = listOf(
+            Pair("OHNANA - Kapo", R.drawable.ohnana),
+            Pair("Sabrina Carpenter - Taste ", R.drawable.taste),
+            Pair("LISA - NEW WOMAN feat. Rosalía ", R.drawable.woman),
             Pair("Myke Towers & Peso Pluma - SE TE NOTA ", R.drawable.nota),
-            Pair("Ana Mena, Emilia - CARITA TRISTE ",R.drawable.caritatriste),
+            Pair("Ana Mena, Emilia - CARITA TRISTE ", R.drawable.caritatriste),
             Pair("The Weeknd - Dancing In The Flames", R.drawable.flames),
             Pair("Dani Fernández - Dile a los demás", R.drawable.dile),
-            Pair("KAROL G - Si Antes Te Hubiera Conocido",R.drawable.karolg)
+            Pair("KAROL G - Si Antes Te Hubiera Conocido", R.drawable.karolg)
 
         )
 
@@ -83,7 +92,6 @@ class Mp3Activity : AppCompatActivity() {
     }
 
 
-
     private fun play() {
         val i = Intent(this, ReproductorActivity::class.java)
         startActivity(i)
@@ -93,7 +101,8 @@ class Mp3Activity : AppCompatActivity() {
         val i = Intent(this, ReproductorActivity::class.java)
         startActivity(i)
     }
-    private fun navigateToReproductorActivity(selectedSong: String){
+
+    private fun navigateToReproductorActivity(selectedSong: String) {
         val songList = arrayListOf(
             "OHNANA - Kapo",
             "Sabrina Carpenter - Taste",
@@ -105,16 +114,16 @@ class Mp3Activity : AppCompatActivity() {
             "KAROL G - Si Antes Te Hubiera Conocido"
         )
 
-        val songIndex = songList.indexOf(selectedSong) // Obtener el índice de la canción seleccionada
+        val songIndex =
+            songList.indexOf(selectedSong) // Obtener el índice de la canción seleccionada
         val intent = Intent(this, ReproductorActivity::class.java)
         intent.putStringArrayListExtra("SONG_LIST", songList)
         intent.putExtra("SONG_INDEX", songIndex) // Pasar el índice
         startActivity(intent)
 
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-       menuInflater.inflate(R.menu.despleg_menu,menu)
+        menuInflater.inflate(R.menu.despleg_menu,menu)
         return true
     }
 
@@ -141,7 +150,8 @@ class Mp3Activity : AppCompatActivity() {
 
                 true
             }
-            R.id.img-> {
+
+            R.id.img -> {
                 val intent = Intent(this, imagenActivity::class.java)
                 startActivity(intent)
 
@@ -155,15 +165,16 @@ class Mp3Activity : AppCompatActivity() {
 
                 true
             }
+
             R.id.rep -> {
                 val intent = Intent(this, ReproductorActivity::class.java)
                 startActivity(intent)
 
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }
-
-
